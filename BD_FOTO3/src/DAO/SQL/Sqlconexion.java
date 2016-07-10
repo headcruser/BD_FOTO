@@ -79,7 +79,6 @@ public abstract class Sqlconexion implements Serializable
         }
         catch (SQLException e) 
         {          throw new Exception("No se pudo finalizar la conexion");}
-    } //fin del metodo
-    
+    } 
     
 }// FIN DE LA CLASE
