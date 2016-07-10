@@ -287,7 +287,7 @@ public class UI_GestionUsuario extends javax.swing.JFrame
                 
                 try
                 {
-                   foto=new ImageIcon( manager.getUsuarioDao().getfoto(p_user.getId_usuario()));
+                   foto=new ImageIcon( manager.getFotoUsuarioDao().getfoto(p_user));
                     nueva=foto.getImage().getScaledInstance(jlfoto.getWidth(), jlfoto.getHeight(), Image.SCALE_SMOOTH);
                     newIcon=new ImageIcon(nueva);   
                 }

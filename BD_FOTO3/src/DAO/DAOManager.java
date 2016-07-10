@@ -9,4 +9,6 @@ public interface DAOManager
      * @return Regresa una referencia de los usuarios gestionados por
      * la interface.*/
     PersonaDao getUsuarioDao();
+    FotoDao getFotoUsuarioDao();
+    
 }
