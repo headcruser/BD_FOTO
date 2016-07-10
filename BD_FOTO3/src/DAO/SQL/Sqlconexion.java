@@ -48,14 +48,14 @@ public abstract class Sqlconexion implements Serializable
   * @throws java.lang.Exception  Se lanza una  exepcion si el servicio de sql no funciona.*/
     protected Connection getConection () throws Exception
     {
-        if(CONEXION==null)
+        if( CONEXION==null || CONEXION.isClosed() )
         {
                 try 
                 {
                         // SE MANDA LLAMAR AL DRIVER DE CONEXION SQL SERVER
-                        Class.forName(DRIVER);
+                        Class.forName( DRIVER );
                         // SE ESTABLECE UNA CONEXION CON LA BASE DE DATPS 
-                        CONEXION = DriverManager.getConnection(v_conexionURL);   
+                        CONEXION = DriverManager.getConnection( v_conexionURL );   
                 } 
                 catch (SQLException | ClassNotFoundException e) 
                     {
@@ -65,4 +65,15 @@ public abstract class Sqlconexion implements Serializable
         }// Fin de if        
         return CONEXION;
     } // FIN DEL METODO 
+    
+    /**Finaliza la conexion con la base de datos*/
+    public void closeConnection() throws Exception
+    {
+        try
+        {   CONEXION.close();}
+        catch (SQLException e) 
+        {          throw new Exception("No se pudo finalizar la conexion");}
+    } //fin del metodo
+    
+    
 }// FIN DE LA CLASE
