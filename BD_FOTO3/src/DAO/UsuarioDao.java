@@ -7,8 +7,8 @@ import ModeloBD.Persona;
  * @see DAO hereda las caracteristicas de la clase DAO
  * @author Headcruser87
  */
-public interface UsuarioDao extends DAO<Persona, String>{
-            
+public interface UsuarioDao extends DAO<Persona, String>
+{
 }
 
 

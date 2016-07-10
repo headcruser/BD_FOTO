@@ -66,11 +66,17 @@ public abstract class Sqlconexion implements Serializable
         return CONEXION;
     } // FIN DEL METODO 
     
-    /**Finaliza la conexion con la base de datos*/
+    /**Finaliza la conexion con la base de datos
+     * @exception Exception Si la conexion no se puede cerrar, entonces 
+     * lanza una exepcion
+     */
     public void closeConnection() throws Exception
     {
         try
-        {   CONEXION.close();}
+        {   
+            if( CONEXION!=null )
+                CONEXION.close();
+        }
         catch (SQLException e) 
         {          throw new Exception("No se pudo finalizar la conexion");}
     } //fin del metodo
