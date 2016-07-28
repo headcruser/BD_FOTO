@@ -5,9 +5,9 @@ package GUI.Reporte;
 import DAO.SQL.Sqlconexion;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import net.sf.jasperreports.engine.JRException;
@@ -28,34 +28,35 @@ import net.sf.jasperreports.view.JasperViewer;
 public class GenerarReportes extends Sqlconexion
 {
     private Connection con;
-    public void ReporteUsuario()
-    {      
+    public void ReporteUsuario() throws Exception
+    { 
+        JasperReport jasperReport;
+        JasperPrint print;
+        JasperViewer view;
         
-      String ubucacion="C:\\Users\\Daniel\\OneDrive\\ARCHIVOS ITC\\SEMESTRE 7\\TALLER DE BASE DE DATOS\\COMPETENCIA 1\\TBD_7 PROYECTO FINAL\\DOCUMENTACION\\BD_ConFoto\\src\\Reporte\\ReporteUsuario.jasper";
-      conexion();
-      InputStream s=null;
-        
-            try 
+        conexion();
+      
+            try ( InputStream s=new FileInputStream( "src\\GUI\\Reporte\\ReporteUsuario.jasper"))
             {
-                s=new FileInputStream(ubucacion);
-                
-            } catch (FileNotFoundException er) 
+               try 
+                   {
+                       jasperReport=(JasperReport)JRLoader.loadObject(s);
+                       print = JasperFillManager.fillReport(jasperReport, null, con);
+                       view =new JasperViewer(print,false);
+                       view.setVisible(true);
+                       JasperExportManager.exportReportToPdfFile( print,"src\\Reporte\\reporte.pdf");
+
+                   } catch (JRException e) 
+                   {
+                       System.out.println("No se guardo el reporte");
+                   }
+               
+              s.close();
+            } catch (IOException er) 
             {
                 System.out.println("NO SE ENCONTRO EL ARCHIVO");
             }
-        try 
-        {
-            JasperReport jasperReport=(JasperReport)JRLoader.loadObject(s);
-            JasperPrint print = JasperFillManager.fillReport(jasperReport, null, con);
-            JasperViewer view =new JasperViewer(print,false);
-            view.setVisible(true);
-            JasperExportManager.exportReportToPdfFile( print,"src\\Reporte\\reporte.pdf");
-            
-        } catch (JRException e) 
-        {
-            System.out.println("Error al cargar el reporte");
-        }
-    }
+    } 
     
     
     public void ReporteIndividual(String ID_USUARIO)
@@ -90,15 +91,9 @@ public class GenerarReportes extends Sqlconexion
     }
     
     
-   private void conexion()
+   private void conexion() throws Exception
    {
-        try 
-        {
-            con=getConection();
-        } 
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
+            con=getConection();   
    }
   
 }
