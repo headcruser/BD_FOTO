@@ -699,7 +699,12 @@ public class UI_GestionUsuario extends javax.swing.JFrame
     }//GEN-LAST:event_tbListaUsuariosMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new GenerarReportes().ReporteUsuario();
+        try
+        {
+            new GenerarReportes().ReporteUsuario();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txt_IDCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_IDCaretUpdate
